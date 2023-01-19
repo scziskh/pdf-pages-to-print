@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { getFilesArray } from "../../helpers/get-files-array";
+import { getPdfInfo } from "../../helpers/pdf.helpers";
 import SimpleFile from "./simple-file";
 
 const UploadFile = (props) => {
   const [files, setFiles] = useState();
-  const [filesArray, setFilesArray] = useState();
+  const [filesInfo, setFilesInfo] = useState();
 
   const handleFileChange = (e) => {
+    // set array files when handleChange
     if (e.target.files) {
       setFiles(e.target.files);
     }
   };
 
   useEffect(() => {
+    // set array files info ([{name,pages}, ...])
     if (files) {
-      getFilesArray(files).then((result) => setFilesArray(result));
+      getPdfInfo(files).then((result) => setFilesInfo(result));
     }
   }, [files]);
 
@@ -24,7 +26,7 @@ const UploadFile = (props) => {
       <Wrapper>
         <File type="file" multiple onChange={handleFileChange} />
       </Wrapper>
-      {filesArray?.map((file, index) => (
+      {filesInfo?.map((file, index) => (
         <SimpleFile key={index} file={file} />
       ))}
     </>
