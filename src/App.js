@@ -1,12 +1,12 @@
 import "./App.css";
 import Header from "./components/header";
-import UploadFile from "./components/upload-file";
+import Content from "./components/content";
 
 const App = () => {
   return (
     <div className="App">
       <Header />
-      <UploadFile />
+      <Content />
     </div>
   );
 };

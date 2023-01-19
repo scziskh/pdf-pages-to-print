@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getPdfInfo } from "../../helpers/pdf.helpers";
-import SimpleFile from "./simple-file";
+import SimpleFile from "../simple-file";
 
-const UploadFile = (props) => {
+const Content = (props) => {
   const [files, setFiles] = useState();
   const [filesInfo, setFilesInfo] = useState();
 
@@ -24,7 +24,7 @@ const UploadFile = (props) => {
   return (
     <>
       <Wrapper>
-        <File type="file" multiple onChange={handleFileChange} />
+        <File type="file" multiple onChange={handleFileChange} accept=".pdf" />
       </Wrapper>
       {filesInfo?.map((file, index) => (
         <SimpleFile key={index} file={file} />
@@ -39,4 +39,4 @@ const Wrapper = styled.form`
 
 const File = styled.input``;
 
-export default UploadFile;
+export default Content;
