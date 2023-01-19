@@ -7,6 +7,6 @@ export const readFileAsync = (file) => {
       resolve(pages);
     };
     reader.onerror = reject;
-    reader.readAsBinaryString(file);
+    reader.readAsText(file);
   });
 };
