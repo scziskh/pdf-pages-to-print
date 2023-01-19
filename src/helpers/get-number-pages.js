@@ -3,7 +3,8 @@ export const readFileAsync = (file) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
-      resolve(reader.result.match(/\/Type[\s]*\/Page[^s]/g)?.length);
+      const pages = reader.result.match(/\/Type[\s]*\/Page[^s]/g)?.length;
+      resolve(pages);
     };
     reader.onerror = reject;
     reader.readAsBinaryString(file);

@@ -5,7 +5,7 @@ const SimpleFile = (props) => {
 
   console.log(Promise.resolve(file));
   return (
-    <Wrapper>
+    <Wrapper {...props}>
       <FileName>{file.name}</FileName>
       <Select name={`sides`}>
         <option value={`one-sided`}>one-sided</option>
@@ -29,6 +29,7 @@ const Wrapper = styled.form`
   display: flex;
   padding: 10px 100px;
   border: 1px solid #212121;
+  color: #212121;
 `;
 
 const FileName = styled.div`
