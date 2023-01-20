@@ -58,3 +58,23 @@ export const getPdfsTotalSheets = (pdfsInfo) => {
   }
   return sum;
 };
+
+export const getPdfsTotalFolders = (pdfsInfo) => {
+  let sum = 0;
+  for (var i = 0; i < pdfsInfo.length; i++) {
+    if (pdfsInfo[i].pages > 70) {
+      sum++;
+    }
+  }
+  return sum;
+};
+
+export const getPdfsTotalStaples = (pdfsInfo) => {
+  let sum = 0;
+  for (var i = 0; i < pdfsInfo.length; i++) {
+    if (pdfsInfo[i].pages <= 70 && pdfsInfo[i].pages > 2) {
+      sum++;
+    }
+  }
+  return sum;
+};

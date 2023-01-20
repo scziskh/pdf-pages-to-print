@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import {
   getPdfsInfo,
+  getPdfsTotalFolders,
   getPdfsTotalPages,
   getPdfsTotalSheets,
+  getPdfsTotalStaples,
 } from "../../helpers/pdf.helpers";
 import SimpleFile from "../simple-file";
 
 const Content = (props) => {
   const [files, setFiles] = useState();
-  const [filesInfo, setFilesInfo] = useState();
-  const [totalPages, setTotalPages] = useState();
-  const [totalSheets, setTotalSheets] = useState();
+  const [filesProps, setFilesProps] = useState();
+  const [filesTotalProps, setFilesTotalProps] = useState();
 
   const handleFileChange = (e) => {
     // set array files when handleChange
@@ -23,22 +24,37 @@ const Content = (props) => {
   useEffect(() => {
     // set array files info ([{name,pages}, ...])
     if (files) {
-      getPdfsInfo(files).then((result) => setFilesInfo(result));
+      getPdfsInfo(files).then((result) => setFilesProps(result));
     }
   }, [files]);
 
   useEffect(() => {
-    // set total pages
-    if (filesInfo) {
-      setTotalPages(() => getPdfsTotalPages(filesInfo));
-      setTotalSheets(() => getPdfsTotalSheets(filesInfo));
+    // set total pages, sheets etc
+    if (filesProps) {
+      setFilesTotalProps(() => {
+        return {
+          pages: getPdfsTotalPages(filesProps),
+          sheets: getPdfsTotalSheets(filesProps),
+          folders: getPdfsTotalFolders(filesProps),
+          staples: getPdfsTotalStaples(filesProps),
+        };
+      });
     }
-  }, [filesInfo]);
+  }, [filesProps]);
+
+  const { pages, sheets, staples, folders } = filesTotalProps ?? {
+    pages: 0,
+    sheets: 0,
+    staples: 0,
+    folders: 0,
+  };
 
   return (
     <Wrapper>
-      <div>Total pages: {totalPages}</div>
-      <div>Total Sheets: {totalSheets}</div>
+      <div>Total Pages: {pages}</div>
+      <div>Total Sheets: {sheets}</div>
+      <div>Total Staples: {staples}</div>
+      <div>Total Folders: {folders}</div>
 
       <FileContainer>
         <File
@@ -49,7 +65,7 @@ const Content = (props) => {
           name="files"
         />
       </FileContainer>
-      {filesInfo?.map((file, index) => (
+      {filesProps?.map((file, index) => (
         <SimpleFile key={index} file={file} />
       ))}
     </Wrapper>
