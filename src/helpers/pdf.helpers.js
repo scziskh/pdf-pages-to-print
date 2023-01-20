@@ -31,12 +31,10 @@ export const getPdfsInfo = async (files) => {
 
     // temp accum async
     const temp = await accum;
-    // get number of pages
-    pdf.isEncrypted = false;
-    const pages = pdf.getPageCount();
+    console.log(pdf);
 
     // push info about curr file (name, pages)
-    temp.push({ name: file.name, pages });
+    temp.push({ name: file.name, pages: pdf.getPageCount() });
 
     return temp;
   }, Promise.resolve([])); // async accum
