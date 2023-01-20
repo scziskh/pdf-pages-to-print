@@ -1,5 +1,6 @@
 import { PDFDocument } from "pdf-lib";
 
+// read file as array buffer
 const readFileAsArrayBuffer = (file) => {
   return new Promise((resolve, reject) => {
     // New File Reader
@@ -16,7 +17,8 @@ const readFileAsArrayBuffer = (file) => {
   });
 };
 
-export const getPdfInfo = async (files) => {
+// get pdf info (name and count of pages)
+export const getPdfsInfo = async (files) => {
   // reduce array with each number of file (like as [0,1,2...n])
   return Object.keys(files).reduce(async (accum, key) => {
     // file is current file
@@ -39,4 +41,20 @@ export const getPdfInfo = async (files) => {
 
     return temp;
   }, Promise.resolve([])); // async accum
+};
+
+export const getPdfsTotalPages = (pdfsInfo) => {
+  let sum = 0;
+  for (var i = 0; i < pdfsInfo.length; i++) {
+    sum += pdfsInfo[i].pages;
+  }
+  return sum;
+};
+
+export const getPdfsTotalSheets = (pdfsInfo) => {
+  let sum = 0;
+  for (var i = 0; i < pdfsInfo.length; i++) {
+    sum += Math.ceil(pdfsInfo[i].pages / 2);
+  }
+  return sum;
 };
