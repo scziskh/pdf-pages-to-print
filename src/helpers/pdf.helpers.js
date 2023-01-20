@@ -32,7 +32,7 @@ export const getPdfsInfo = async (files) => {
     // temp accum async
     const temp = await accum;
     // get number of pages
-    const pages = pdf.isEncrypted ? 0 : pdf.getPageCount();
+    const pages = pdf.getPageCount();
 
     // push info about curr file (name, pages)
     temp.push({ name: file.name, pages });
