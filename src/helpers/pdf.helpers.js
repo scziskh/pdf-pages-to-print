@@ -28,7 +28,7 @@ export const getPdfsInfo = async (files) => {
     const arrayBuffer = await readFileAsArrayBuffer(file);
 
     // load pdf file with pdf-lib
-    const pdf = await PDFDocument.load(arrayBuffer);
+    const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
 
     // temp accum async
     const temp = await accum;

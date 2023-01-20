@@ -1,9 +1,12 @@
 import styled from "styled-components";
 
 const Footer = (props) => {
+  // get package.json version
+  const { version } = require("../../../package.json");
+
   return (
     <Wrapper>
-      <P>pdf-pages-to-print v0.2.0</P>
+      <P>pdf-pages-to-print {version}</P>
     </Wrapper>
   );
 };
