@@ -3,9 +3,8 @@ import styled from "styled-components";
 const SimpleFile = (props) => {
   const { file } = props;
 
-  console.log(Promise.resolve(file));
   return (
-    <Wrapper {...props}>
+    <Wrapper {...file}>
       <FileName>{file.name}</FileName>
       <Select name={`sides`}>
         <option value={`one-sided`}>one-sided</option>
@@ -20,7 +19,7 @@ const SimpleFile = (props) => {
         <option value={`staple`}>staple</option>
         <option value={`folder`}>folder</option>
       </Select>
-      <PagesNumber>{file.pages ?? `—`}</PagesNumber>
+      <PagesNumber>{file.pages}</PagesNumber>
     </Wrapper>
   );
 };
@@ -29,7 +28,15 @@ const Wrapper = styled.form`
   display: flex;
   padding: 10px 100px;
   border: 1px solid #212121;
-  color: #212121;
+  color: ${(props) => (props.pages ? "#212121;" : "red")};
+  background-color: ${(props) => {
+    if (props.pages > 70) {
+      return "green";
+    }
+    if (props.pages <= 70 && props.pages > 2) {
+      return "yellow";
+    }
+  }};
 `;
 
 const FileName = styled.div`

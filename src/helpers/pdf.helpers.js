@@ -26,15 +26,13 @@ export const getPdfsInfo = async (files) => {
 
     // read file as array buffer (UTF-8)
     const arrayBuffer = await readFileAsArrayBuffer(file);
-
     // load pdf file with pdf-lib
     const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
 
     // temp accum async
     const temp = await accum;
-
     // get number of pages
-    const pages = pdf.getPages().length;
+    const pages = pdf.isEncrypted ? 0 : pdf.getPageCount();
 
     // push info about curr file (name, pages)
     temp.push({ name: file.name, pages });
