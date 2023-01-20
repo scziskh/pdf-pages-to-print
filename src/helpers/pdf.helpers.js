@@ -18,60 +18,11 @@ const readFileAsArrayBuffer = (file) => {
 };
 
 // get pdf info (name and count of pages)
-export const getPdfsInfo = async (files) => {
-  // reduce array with each number of file (like as [0,1,2...n])
-  return Object.keys(files).reduce(async (accum, key) => {
-    // file is current file
-    const file = files[key];
+export const getPdf = async (file) => {
+  // read file as array buffer (UTF-8)
+  const arrayBuffer = await readFileAsArrayBuffer(file);
+  // load pdf file with pdf-lib
+  const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
 
-    // read file as array buffer (UTF-8)
-    const arrayBuffer = await readFileAsArrayBuffer(file);
-    // load pdf file with pdf-lib
-    const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
-
-    // temp accum async
-    const temp = await accum;
-    console.log(pdf);
-
-    // push info about curr file (name, pages)
-    temp.push({ name: file.name, pages: pdf.getPageCount() });
-
-    return temp;
-  }, Promise.resolve([])); // async accum
-};
-
-export const getPdfsTotalPages = (pdfsInfo) => {
-  let sum = 0;
-  for (var i = 0; i < pdfsInfo.length; i++) {
-    sum += pdfsInfo[i].pages;
-  }
-  return sum;
-};
-
-export const getPdfsTotalSheets = (pdfsInfo) => {
-  let sum = 0;
-  for (var i = 0; i < pdfsInfo.length; i++) {
-    sum += Math.ceil(pdfsInfo[i].pages / 2);
-  }
-  return sum;
-};
-
-export const getPdfsTotalFolders = (pdfsInfo) => {
-  let sum = 0;
-  for (var i = 0; i < pdfsInfo.length; i++) {
-    if (pdfsInfo[i].pages > 70) {
-      sum++;
-    }
-  }
-  return sum;
-};
-
-export const getPdfsTotalStaples = (pdfsInfo) => {
-  let sum = 0;
-  for (var i = 0; i < pdfsInfo.length; i++) {
-    if (pdfsInfo[i].pages <= 70 && pdfsInfo[i].pages > 2) {
-      sum++;
-    }
-  }
-  return sum;
+  return pdf;
 };
