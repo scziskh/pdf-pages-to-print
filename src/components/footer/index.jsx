@@ -6,7 +6,7 @@ const Footer = (props) => {
 
   return (
     <Wrapper>
-      <P>pdf-pages-to-print {version}</P>
+      <P>pdf-pages-to-print v. {version}</P>
     </Wrapper>
   );
 };

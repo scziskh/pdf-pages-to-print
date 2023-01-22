@@ -4,6 +4,9 @@ const Header = (props) => {
   return (
     <Wrapper>
       <Img src="/assets/copy-logo2.png" />
+      <Form>
+        <Button>Очистити список файлів</Button>
+      </Form>
     </Wrapper>
   );
 };
@@ -17,6 +20,16 @@ const Wrapper = styled.header`
   display: flex;
   padding: 20px;
   background-color: #212121;
+`;
+
+const Form = styled.form`
+  position: absolute;
+  height: 64px;
+  right: 20px;
+`;
+const Button = styled.button`
+  height: 100%;
+  padding: 20px;
 `;
 
 export default Header;

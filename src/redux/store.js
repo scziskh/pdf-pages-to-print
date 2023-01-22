@@ -1,5 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import pdfPropsReducer from "./reducers/fileList";
 
-export const store = configureStore({
-  reducer: {},
-});
+const rootReducer = combineReducers({ pdfPropsReducer });
+
+export const store = configureStore({ reducer: rootReducer });

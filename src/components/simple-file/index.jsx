@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 
-const SimpleFile = ({ props }) => {
+const SimpleFile = ({ props, index }) => {
   const [pdfProps, setPdfProps] = useState(props);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,8 +23,6 @@ const SimpleFile = ({ props }) => {
     mode: `onBlur`,
     defaultValues: pdfProps,
   });
-
-  console.log(pdfProps);
 
   return (
     <Wrapper onChange={handleChange} {...pdfProps}>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { defaultFormData } from "../../helpers/default-values";
 import { getPdfsProps } from "../../helpers/pdf.helpers";
@@ -11,6 +12,9 @@ const Content = (props) => {
   const [pdfsProps, setPdfsProps] = useState(() => []);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState(defaultFormData);
+  const pdfsPropsGlobal = useSelector((state) => state.pdfPropsReducer);
+
+  console.log(pdfsPropsGlobal);
 
   const handleFileChange = (e) => {
     setIsLoading(true);
@@ -36,9 +40,8 @@ const Content = (props) => {
     if (files) {
       setterPdfsProps();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
-
-  console.log(formData);
 
   const { register, getValues } = useForm({
     mode: `onBlur`,
@@ -46,7 +49,11 @@ const Content = (props) => {
   });
 
   const filesList = pdfsProps.map((pdfProps, index) => (
-    <SimpleFile key={`${index}key${pdfProps.name}`} props={pdfProps} />
+    <SimpleFile
+      key={`${index}key${pdfProps.name}`}
+      props={pdfProps}
+      index={index}
+    />
   ));
 
   return (

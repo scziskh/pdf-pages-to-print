@@ -1,18 +1,16 @@
-import { createAction, createReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-const addFile = createAction("files/add");
-const removeFile = createAction("files/remove");
+const initialState = {};
 
-const initialState = { files: undefined };
-
-const fileList = createReducer(initialState, (builder) => {
-  builder
-    .addCase(addFile, (state, action) => {
-      const { name, pages } = action;
-      state[name] = pages;
-    })
-    .addCase(removeFile, (state, action) => {
-      const { name } = action;
-      state[name] = undefined;
-    });
+export const pdfPropsSlice = createSlice({
+  name: "pdfProps",
+  initialState,
+  reducers: {
+    changePdfProps(state, action) {
+      const { index, pdfProps } = action;
+      state[index] = pdfProps;
+    },
+  },
 });
+
+export default pdfPropsSlice.reducer;
