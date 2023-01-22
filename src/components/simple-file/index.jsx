@@ -1,75 +1,51 @@
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { resetPagesCount } from "../../helpers/default-values";
-import { PdfPagesToPrint } from "../../helpers/pdf-pafes-to-print.class";
-import { getPdf } from "../../helpers/pdf.helpers";
 
-const SimpleFile = (props) => {
-  const { file } = props;
-  const [fileProps, setFileProps] = useState({});
+const SimpleFile = ({ props }) => {
+  const [pdfProps, setPdfProps] = useState(props);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [formState, setFormState] = useState({
-    sides: 2,
-    print: `grayscale-print`,
-    binding: `none`,
-    perforation: false,
-    count: 1,
-  });
-
-  const formChange = (e) => {
-    setFormState((state) => {
-      const name = e.target.name;
-      const value = e.target.value;
-      state[name] = value;
-
-      return state;
+  const handleChange = (e) => {
+    setIsLoading(true);
+    const formValues = getValues();
+    setPdfProps((state) => {
+      const result = Object.assign(state, formValues);
+      return result;
     });
   };
 
   useEffect(() => {
-    const setterFileProps = async () => {
-      const pdf = await getPdf(file);
-      const pdfptp = new PdfPagesToPrint(pdf, formState);
-      const pagesCount = await pdfptp.getPagesCount();
-      const totalPagesCount = pagesCount * Number(formState.count);
-      const pages = resetPagesCount();
-      pages[formState.print] = totalPagesCount;
-      const binding = await pdfptp.getBinding();
-      const perforationCount = await pdfptp.getPerforationCount();
-      const sheetsCount = await pdfptp.getSheetsCount();
-      setFileProps({
-        totalPagesCount,
-        pagesCount,
-        binding,
-        perforationCount,
-        sheetsCount,
-        pages,
-      });
-    };
-    setterFileProps();
-  }, [file, formState]);
+    setIsLoading(false);
+  }, [pdfProps, isLoading]);
 
-  console.log({ fileProps, formState });
+  const { register, getValues } = useForm({
+    mode: `onBlur`,
+    defaultValues: pdfProps,
+  });
+
+  console.log(pdfProps);
 
   return (
-    <Wrapper onChange={(e) => formChange(e)}>
-      <FileName>{file.name}</FileName>
-      <Select name={`sides`} defaultValue={formState.sides}>
+    <Wrapper onChange={handleChange} {...pdfProps}>
+      <FileName>{props.name}</FileName>
+      <Select {...register(`sides`)}>
         <option value={1}>Односторонній друк</option>
         <option value={2}>Двосторонній друк</option>
       </Select>
-      <Select name={`print`} defaultValue={formState.print}>
+      <Select {...register(`print`)}>
         <option value={`color-print`}>Кольоровий друк</option>
         <option value={`grayscale-print`}>Ч/б друк</option>
         <option value={`color-paper`}>Кольоровий папір</option>
       </Select>
-      <Select name={`binding`} defaultValue={formState.binding}>
+      <Select {...register(`binding`)}>
         <option value={`none`}>Без сшивки</option>
         <option value={`staple`}>Степлер</option>
         <option value={`folder`}>Швидкосшивач</option>
       </Select>
-      <Input type={`number`} value={formState.count} onChange={formChange} />
-      <PagesNumber>{fileProps.pages?.total}</PagesNumber>
+      <Input type={`checkbox`} {...register("isPerforation")} />
+      <Input type={`number`} {...register(`copiesCount`)} />
+      <PagesNumber>{pdfProps.pagesCount}</PagesNumber>
     </Wrapper>
   );
 };
@@ -78,7 +54,26 @@ const Wrapper = styled.form`
   display: flex;
   padding: 10px;
   border: 1px solid #212121;
-  color: #212121;
+  color: ${(props) => {
+    switch (props.print) {
+      case `color-print`:
+        return "DarkGreen";
+      case `color-paper`:
+        return "MediumVioletRed";
+      default:
+        return "#212121";
+    }
+  }};
+  background-color: ${(props) => {
+    switch (props.binding) {
+      case `staple`:
+        return "LemonChiffon";
+      case `folder`:
+        return "MediumSpringGreen";
+      default:
+        return "white";
+    }
+  }};
 `;
 
 const FileName = styled.div`
@@ -92,6 +87,7 @@ const Select = styled.select`
   margin: 0 5px;
 `;
 const Input = styled.input`
+  text-align: center;
   width: 10%;
   padding: 10px;
   margin: 0 5px;

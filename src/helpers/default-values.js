@@ -1,3 +1,8 @@
-export const resetPagesCount = () => {
-  return { "color-print": 0, "grayscale-print": 0, "color-paper": 0 };
+export const defaultFormData = {
+  sides: 2,
+  isPerforation: true,
+  isBinding: true,
+  maxSheetsStaples: 35,
+  print: "grayscale-print",
+  copiesCount: 1,
 };

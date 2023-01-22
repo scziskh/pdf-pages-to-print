@@ -1,17 +1,15 @@
 import styled from "styled-components";
 
-const TableResult = ({ props }) => {
+const TableResult = (props) => {
   return (
     <Wrapper>
-      <Row>Сторінок ч/б: {props?.pagesGray}</Row>
-      <Row>Сторінок кольорових: {props?.pagesColor}</Row>
-      <Row>Листопідбір: {props?.sheets}</Row>
-      <Row>Перфорація: {props?.perforation}</Row>
-      <Row>Степлер: {props?.staples}</Row>
-      <Row>Швидкосшивач: {props?.folders}</Row>
-      <Row>
-        <strong>Всього файлів: {props?.totalFiles}</strong>
-      </Row>
+      <Row>Сторінок ч/б: {props.pagesGray}</Row>
+      <Row>Сторінок кольорових: {props.pagesColor}</Row>
+      <Row>Сторінок на кольоровому папері: {props.pagesColorPaper}</Row>
+      <Row>Листопідбір: {props.sheets}</Row>
+      <Row>Перфорація: {props.perforation}</Row>
+      <Row>Степлер: {props.staples}</Row>
+      <Row>Швидкосшивач: {props.folders}</Row>
     </Wrapper>
   );
 };
