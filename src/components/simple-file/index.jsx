@@ -1,31 +1,38 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { pdfsPropsSlice } from "../../redux/reducers/fileList";
 
 const SimpleFile = ({ props, index }) => {
-  const [pdfProps, setPdfProps] = useState(props);
+  const [formData, setFormData] = useState(props);
   const [isLoading, setIsLoading] = useState(false);
+  const { updatePdfProps } = pdfsPropsSlice.actions;
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setIsLoading(true);
     const formValues = getValues();
-    setPdfProps((state) => {
+    setFormData((state) => {
       const result = Object.assign(state, formValues);
+      dispatch(updatePdfProps({ index, pdfProps: result }));
+
       return result;
     });
   };
 
   useEffect(() => {
+    dispatch(updatePdfProps({ index, pdfProps: formData }));
     setIsLoading(false);
-  }, [pdfProps, isLoading]);
+  }, [formData, isLoading]);
 
   const { register, getValues } = useForm({
     mode: `onBlur`,
-    defaultValues: pdfProps,
+    defaultValues: formData,
   });
 
   return (
-    <Wrapper onChange={handleChange} {...pdfProps}>
+    <Wrapper onChange={handleChange} {...formData}>
       <FileName>{props.name}</FileName>
       <Select {...register(`sides`)}>
         <option value={1}>Односторонній друк</option>
@@ -43,7 +50,7 @@ const SimpleFile = ({ props, index }) => {
       </Select>
       <Input type={`checkbox`} {...register("isPerforation")} />
       <Input type={`number`} {...register(`copiesCount`)} />
-      <PagesNumber>{pdfProps.pagesCount}</PagesNumber>
+      <PagesNumber>{formData.pagesCount}</PagesNumber>
     </Wrapper>
   );
 };

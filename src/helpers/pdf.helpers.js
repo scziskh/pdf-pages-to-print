@@ -32,7 +32,7 @@ const getBinding = (sheetsCount, maxSheetsStaples) => {
     return "folder";
   }
 
-  if (sheetsCount > 2) {
+  if (sheetsCount > 1) {
     return "staple";
   }
 
