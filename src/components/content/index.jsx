@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { defaultFormData } from "../../helpers/config";
 import { getPdfsProps } from "../../helpers/props-pdf.helpers";
+import Loader from "../loader";
 import SimpleFile from "../simple-file";
 import TableResult from "../table-result";
 
@@ -110,11 +111,7 @@ const Content = (props) => {
         </FileLabel>
       </FileContainer>
       <FixedHeightDiv>
-        {isLoading ? (
-          <>Loading...</>
-        ) : (
-          <TableResult totalFiles={pdfsProps.length} />
-        )}
+        {isLoading ? <Loader /> : <TableResult totalFiles={pdfsProps.length} />}
       </FixedHeightDiv>
       {filesList}
     </Wrapper>

@@ -8,9 +8,10 @@ export const pdfsPropsSlice = createSlice({
   reducers: {
     updatePdfProps(state, action) {
       const { index, pdfProps } = action.payload;
-
-      const temp = state;
-      temp[index] = pdfProps;
+      state[index] = pdfProps;
+    },
+    setError(state, action) {
+      state = action.payload;
     },
   },
 });
