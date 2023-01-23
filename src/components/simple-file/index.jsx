@@ -1,42 +1,36 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { pdfsPropsSlice } from "../../redux/reducers/fileList";
 
 const SimpleFile = ({ props, index }) => {
-  const [formData, setFormData] = useState(props);
   const [isLoading, setIsLoading] = useState(false);
+
+  const pdfsProps = useSelector((state) => state.pdfPropsReducer);
   const { updatePdfProps } = pdfsPropsSlice.actions;
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setIsLoading(true);
-    const formValues = getValues();
-    setFormData((state) => {
-      const result = Object.assign(state, formValues);
-      dispatch(updatePdfProps({ index, pdfProps: result }));
-
-      return result;
-    });
   };
-
-  useEffect(() => {
-    dispatch(updatePdfProps({ index, pdfProps: formData }));
-    setIsLoading(false);
-  }, [formData, isLoading]);
 
   const { register, getValues } = useForm({
     mode: `onBlur`,
-    defaultValues: formData,
+    defaultValues: props,
   });
 
+  useEffect(() => {
+    setIsLoading(false);
+    dispatch(updatePdfProps({ index, pdfProps: getValues() }));
+  }, [dispatch, getValues, index, isLoading, updatePdfProps]);
+
   return (
-    <Wrapper onChange={handleChange} {...formData}>
-      <FileName>{props.name}</FileName>
+    <Wrapper onChange={handleChange} {...pdfsProps?.[index]}>
+      <FileName>{pdfsProps?.[index]?.name}</FileName>
       <Select {...register(`sides`)}>
-        <option value={1}>Односторонній друк</option>
-        <option value={2}>Двосторонній друк</option>
+        <option value={`1`}>Односторонній друк</option>
+        <option value={`2`}>Двосторонній друк</option>
       </Select>
       <Select {...register(`print`)}>
         <option value={`color-print`}>Кольоровий друк</option>
@@ -50,7 +44,7 @@ const SimpleFile = ({ props, index }) => {
       </Select>
       <Input type={`checkbox`} {...register("isPerforation")} />
       <Input type={`number`} {...register(`copiesCount`)} />
-      <PagesNumber>{formData.pagesCount}</PagesNumber>
+      <PagesNumber>{pdfsProps?.[index]?.pagesCount}</PagesNumber>
     </Wrapper>
   );
 };

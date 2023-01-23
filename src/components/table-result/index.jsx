@@ -1,9 +1,12 @@
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { getSumArraysObj } from "../../helpers/calculator";
+import { getSheetsCount } from "../../helpers/pdf.helpers";
 
 const TableResult = (props) => {
   const pdfsProps = useSelector((state) => state.pdfPropsReducer);
+
+  console.log(pdfsProps);
   const getTotalPdfsProps = (pdfsProps) => {
     const objectArrays = {
       [`grayscale-print`]: [],
@@ -14,18 +17,27 @@ const TableResult = (props) => {
       [`staple`]: [],
       [`folder`]: [],
     };
+
+    // eslint-disable-next-line array-callback-return
     Object.keys(pdfsProps)?.map((key) => {
       const pdfProps = pdfsProps[key];
       objectArrays[pdfProps.print].push(
         pdfProps.pagesCount * pdfProps.copiesCount
       );
-      objectArrays[`sheetsCount`].push(
-        pdfProps.sheetsCount * pdfProps.copiesCount
-      );
+
+      const sheetsCount = getSheetsCount(pdfProps.pagesCount, pdfProps.sides);
+      objectArrays[`sheetsCount`].push(sheetsCount * pdfProps.copiesCount);
+
+      if (pdfProps.isPerforation) {
+        objectArrays[`perforationCount`].push(
+          sheetsCount * pdfProps.copiesCount
+        );
+      }
+
       if (pdfProps.binding === `staple`) {
-        objectArrays[`staple`].push(Number(pdfProps.copiesCount));
+        objectArrays[`staple`].push(+pdfProps.copiesCount);
       } else if (pdfProps.binding === `folder`) {
-        objectArrays[`folder`].push(Number(pdfProps.copiesCount));
+        objectArrays[`folder`].push(+pdfProps.copiesCount);
       }
     });
 

@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {};
 
@@ -8,7 +8,9 @@ export const pdfsPropsSlice = createSlice({
   reducers: {
     updatePdfProps(state, action) {
       const { index, pdfProps } = action.payload;
-      state[index] = pdfProps;
+
+      const temp = state;
+      temp[index] = pdfProps;
     },
   },
 });
