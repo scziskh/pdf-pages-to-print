@@ -71,6 +71,9 @@ const Wrapper = styled.form`
     }
   }};
   background-color: ${(props) => {
+    if (props.pagesCount === 0) {
+      return "red";
+    }
     switch (props.binding) {
       case `staple`:
         return "LemonChiffon";

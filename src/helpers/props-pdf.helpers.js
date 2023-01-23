@@ -34,7 +34,12 @@ export const getPdfsProps = async (files, config) => {
     const pdf = await getPdf(file);
 
     const { name } = file;
-    const pagesCount = pdf.getPageCount();
+    let pagesCount;
+    try {
+      pagesCount = pdf.getPageCount();
+    } catch {
+      pagesCount = 0;
+    }
     const sheetsCount = getSheetsCount(pagesCount, sides);
     const binding = isBinding
       ? getBinding(sheetsCount, maxSheetsStaples)
