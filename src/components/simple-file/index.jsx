@@ -38,11 +38,18 @@ const SimpleFile = ({ props, index }) => {
         <option value={`color-paper`}>Кольоровий папір</option>
       </Select>
       <Select {...register(`binding`)}>
-        <option value={`none`}>Без сшивки</option>
+        <option value={`no-binding`}>Без сшивки</option>
         <option value={`staple`}>Степлер</option>
         <option value={`folder`}>Швидкосшивач</option>
       </Select>
-      <Input type={`checkbox`} {...register("isPerforation")} />
+      <Checkbox>
+        <input
+          type={`checkbox`}
+          id={`isPerforation${index}`}
+          {...register(`isPerforation`)}
+        />
+        <label htmlFor={`isPerforation${index}`}>Перфорація</label>
+      </Checkbox>
       <Input type={`number`} {...register(`copiesCount`)} />
       <PagesNumber>{pdfsProps?.[index]?.pagesCount}</PagesNumber>
     </Wrapper>
@@ -76,26 +83,48 @@ const Wrapper = styled.form`
 `;
 
 const FileName = styled.div`
+  overflow: hidden;
   padding: 10px;
-  width: 40%;
-`;
-
-const Select = styled.select`
-  width: 10%;
-  padding: 10px;
-  margin: 0 5px;
-`;
-const Input = styled.input`
-  text-align: center;
-  width: 10%;
-  padding: 10px;
-  margin: 0 5px;
+  width: 55%;
+  white-space: nowrap;
 `;
 const PagesNumber = styled.div`
   padding: 10px;
-  width: 20%;
+  width: 10%;
   text-align: center;
   font-weight: bold;
+`;
+const Select = styled.select`
+  width: 10%;
+  margin: 0 5px;
+  padding: 10px;
+`;
+const Input = styled.input`
+  width: 5%;
+  padding: 10px;
+  margin: 0 5px;
+  text-align: center;
+`;
+const Checkbox = styled.div`
+  background-color: white;
+  width: 10%;
+  margin: 0 5px;
+  label {
+    padding: 10px;
+    display: block;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid #212121;
+    border-radius: 3px;
+  }
+  input:checked ~ label {
+    background-color: #212121;
+    color: white;
+  }
+  input {
+    display: none;
+  }
 `;
 
 export default SimpleFile;
