@@ -32,7 +32,13 @@ const SimpleFile = ({ props, index }) => {
 
   return (
     <Wrapper onChange={handleChange} {...pdfsProps?.[index]}>
-      <FileName>{pdfsProps?.[index]?.name}</FileName>
+      <FileName>
+        {
+          <a href={pdfsProps?.[index]?.href} target={`_blank`}>
+            {pdfsProps?.[index]?.name}
+          </a>
+        }
+      </FileName>
       <Select {...register(`sides`)}>
         <option value={`1`}>Односторонній друк</option>
         <option value={`2`}>Двосторонній друк</option>
@@ -110,6 +116,9 @@ const Wrapper = styled.form`
 `;
 
 const FileName = styled.div`
+  a {
+    color: #212121;
+  }
   overflow: hidden;
   padding: 10px;
   width: 45%;

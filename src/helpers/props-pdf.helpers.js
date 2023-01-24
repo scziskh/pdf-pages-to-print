@@ -33,6 +33,7 @@ export const getPdfsProps = async (files, config) => {
     const file = files[key];
     const pdf = await getPdf(file);
     const { name } = file;
+    const href = URL.createObjectURL(file);
     let pagesCount;
     try {
       pagesCount = pdf.getPageCount();
@@ -52,6 +53,7 @@ export const getPdfsProps = async (files, config) => {
       copiesCount,
       name,
       sides,
+      href,
     });
 
     return temp;
