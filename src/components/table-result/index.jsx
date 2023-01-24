@@ -5,10 +5,23 @@ import { getAmountsPdfProps } from "../../helpers/props-pdf.helpers";
 const TableResult = (props) => {
   const pdfsProps = useSelector((state) => state.pdfPropsReducer);
   const ammountsPdfsProps = getAmountsPdfProps(pdfsProps);
+  const badFiles = { background: `red` };
+  const firstRow = ammountsPdfsProps[`badFiles`] ? (
+    <>
+      <Div {...badFiles}>Увага! Деякі файли не опрацьовані </Div>
+      <Div {...badFiles}>{ammountsPdfsProps[`badFiles`]}</Div>
+    </>
+  ) : (
+    <>
+      <Div>Параметр</Div>
+      <Div>Сума</Div>
+    </>
+  );
 
   return (
     <Wrapper>
       <Grid>
+        {firstRow}
         <Div>Сторінок ч/б:</Div>
         <Div>{ammountsPdfsProps && ammountsPdfsProps[`grayscale-print`]}</Div>
         <Div>Сторінок кольорових:</Div>
@@ -33,6 +46,7 @@ const Div = styled.div`
   border: 1px solid #212121;
   padding: 10px;
   text-align: center;
+  background-color: ${(props) => props.background ?? "white"};
 `;
 const Grid = styled.div`
   margin: auto;

@@ -7,6 +7,7 @@ export const totalPdfsPropsParamsArray = [
   `perforationCount`,
   `staple`,
   `folder`,
+  `badFiles`,
 ];
 
 export const defaultFormData = {

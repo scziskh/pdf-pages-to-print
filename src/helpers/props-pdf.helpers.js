@@ -80,6 +80,10 @@ export const getAmountsPdfProps = (pdfsProps) => {
 
     accum[binding] += Number(copiesCount);
 
+    if (pagesCount === 0) {
+      accum.badFiles++;
+    }
+
     return accum;
   }, defaultParams);
 
