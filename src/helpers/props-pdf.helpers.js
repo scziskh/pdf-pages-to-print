@@ -72,7 +72,7 @@ export const getAmountsPdfProps = (pdfsProps) => {
       pdfProps;
     const sheetsCount = getSheetsCount(pagesCount, sides);
     accum[print] += pagesCount * copiesCount;
-    accum.sheetsCount += sheetsCount;
+    accum.sheetsCount += sheetsCount * copiesCount;
 
     if (isPerforation) {
       accum.perforationCount += sheetsCount * copiesCount;
