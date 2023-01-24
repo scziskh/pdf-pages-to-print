@@ -32,7 +32,6 @@ export const getPdfsProps = async (files, config) => {
     const temp = await accum;
     const file = files[key];
     const pdf = await getPdf(file);
-
     const { name } = file;
     let pagesCount;
     try {

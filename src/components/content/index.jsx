@@ -16,6 +16,7 @@ const Content = (props) => {
   // action when file(s) choosed
   const handleFileChange = (e) => {
     setIsLoading(true);
+    console.log(document.getElementById("files").value);
     setFiles(e.target.files);
   };
 
@@ -90,6 +91,7 @@ const Content = (props) => {
           type={`number`}
           placeholder={`Максимум аркушів на скобу `}
           {...register(`maxSheetsStaples`)}
+          disabled={!formData.isBinding}
         />
         <Checkbox>
           <input
@@ -108,11 +110,11 @@ const Content = (props) => {
       <FileContainer>
         <File
           type="file"
-          multiple
           onChange={handleFileChange}
-          accept=".pdf"
           name="files"
           id="files"
+          accept=".pdf"
+          multiple
         />
         <FileLabel htmlFor="files">
           Додати файли PDF (Додано: {pdfsProps.length} файлів)

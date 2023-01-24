@@ -11,14 +11,19 @@ const SimpleFile = ({ props, index }) => {
   const { updatePdfProps } = pdfsPropsSlice.actions;
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  const handleChange = () => {
     setIsLoading(true);
   };
 
-  const { register, getValues } = useForm({
+  const { register, getValues, setValue } = useForm({
     mode: `onBlur`,
     defaultValues: props,
   });
+
+  const handlePagesCountChange = () => {
+    setIsLoading(true);
+    setValue(`pagesCount`, getValues(`pagesCountUser`));
+  };
 
   useEffect(() => {
     setIsLoading(false);
@@ -59,7 +64,18 @@ const SimpleFile = ({ props, index }) => {
         <label htmlFor={`isTwoPerPage${index}`}>2 на 1 стор.</label>
       </Checkbox>
       <Input type={`number`} {...register(`copiesCount`)} />
-      <PagesNumber>{pdfsProps?.[index]?.pagesCount}</PagesNumber>
+      {pdfsProps?.[index]?.pagesCount ? (
+        <PagesNumber>{pdfsProps?.[index]?.pagesCount}</PagesNumber>
+      ) : (
+        <SetPagesNumber>
+          <input type={`number`} {...register(`pagesCountUser`)} />
+          <input
+            type={`button`}
+            value={`ok`}
+            onClick={handlePagesCountChange}
+          />
+        </SetPagesNumber>
+      )}
     </Wrapper>
   );
 };
@@ -104,6 +120,19 @@ const PagesNumber = styled.div`
   width: 10%;
   text-align: center;
   font-weight: bold;
+`;
+
+const SetPagesNumber = styled.div`
+  width: 10%;
+  input[type="number"] {
+    padding: 10px;
+    width: 50%;
+    margin: 0 5px;
+  }
+  input[type="button"] {
+    padding: 10px;
+    width: 30%;
+  }
 `;
 const Select = styled.select`
   width: 10%;
