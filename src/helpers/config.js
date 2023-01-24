@@ -14,6 +14,7 @@ export const defaultFormData = {
   sides: 2,
   isPerforation: true,
   isBinding: true,
+  isTwoPerPage: false,
   maxSheetsStaples: 35,
   print: "grayscale-print",
   copiesCount: 1,

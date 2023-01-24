@@ -14,7 +14,7 @@ const Wrapper = styled.div`
 const Circle = styled.div`
   margin-top: 100px;
   display: block;
-  background: linear-gradient(to left, #743ad5, #d53a9d);
+  background: linear-gradient(to left, LemonChiffon, MediumSpringGreen);
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;

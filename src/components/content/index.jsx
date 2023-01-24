@@ -91,6 +91,14 @@ const Content = (props) => {
           placeholder={`Максимум аркушів на скобу `}
           {...register(`maxSheetsStaples`)}
         />
+        <Checkbox>
+          <input
+            type={`checkbox`}
+            id={`isTwoPerPage`}
+            {...register(`isTwoPerPage`)}
+          />
+          <label htmlFor={`isTwoPerPage`}>2 на 1 стор.</label>
+        </Checkbox>
         <Input
           type={`number`}
           placeholder={`Копій`}
@@ -175,6 +183,8 @@ const Checkbox = styled.div`
     cursor: pointer;
     border: 1px solid #212121;
     border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
   }
   input:checked ~ label {
     background-color: #212121;

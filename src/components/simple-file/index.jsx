@@ -50,6 +50,14 @@ const SimpleFile = ({ props, index }) => {
         />
         <label htmlFor={`isPerforation${index}`}>Перфорація</label>
       </Checkbox>
+      <Checkbox>
+        <input
+          type={`checkbox`}
+          id={`isTwoPerPage${index}`}
+          {...register(`isTwoPerPage`)}
+        />
+        <label htmlFor={`isTwoPerPage${index}`}>2 на 1 стор.</label>
+      </Checkbox>
       <Input type={`number`} {...register(`copiesCount`)} />
       <PagesNumber>{pdfsProps?.[index]?.pagesCount}</PagesNumber>
     </Wrapper>
@@ -88,7 +96,7 @@ const Wrapper = styled.form`
 const FileName = styled.div`
   overflow: hidden;
   padding: 10px;
-  width: 55%;
+  width: 45%;
   white-space: nowrap;
 `;
 const PagesNumber = styled.div`
@@ -120,6 +128,8 @@ const Checkbox = styled.div`
     cursor: pointer;
     border: 1px solid #212121;
     border-radius: 3px;
+    white-space: nowrap;
+    overflow: hidden;
   }
   input:checked ~ label {
     background-color: #212121;

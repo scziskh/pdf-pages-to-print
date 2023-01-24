@@ -68,10 +68,22 @@ export const getAmountsPdfProps = (pdfsProps) => {
   // eslint-disable-next-line array-callback-return
   const result = Object.keys(pdfsProps).reduce((accum, key) => {
     const pdfProps = pdfsProps[key];
-    const { pagesCount, copiesCount, sides, isPerforation, binding, print } =
-      pdfProps;
-    const sheetsCount = getSheetsCount(pagesCount, sides);
-    accum[print] += pagesCount * copiesCount;
+    const {
+      pagesCount,
+      copiesCount,
+      sides,
+      isPerforation,
+      isTwoPerPage,
+      binding,
+      print,
+    } = pdfProps;
+
+    const realPagesCount = isTwoPerPage
+      ? Math.ceil(pagesCount / 2)
+      : pagesCount;
+
+    const sheetsCount = getSheetsCount(realPagesCount, sides);
+    accum[print] += realPagesCount * copiesCount;
     accum.sheetsCount += sheetsCount * copiesCount;
 
     if (isPerforation) {
@@ -80,7 +92,7 @@ export const getAmountsPdfProps = (pdfsProps) => {
 
     accum[binding] += Number(copiesCount);
 
-    if (pagesCount === 0) {
+    if (realPagesCount === 0) {
       accum.badFiles++;
     }
 
