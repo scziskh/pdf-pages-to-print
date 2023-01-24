@@ -115,6 +115,7 @@ const Content = (props) => {
           id="files"
           accept=".pdf"
           multiple
+          disabled={isLoading}
         />
         <FileLabel htmlFor="files">
           Додати файли PDF (Додано: {pdfsProps.length} файлів)
@@ -141,11 +142,18 @@ const FileContainer = styled.form`
 
 const File = styled.input`
   display: none;
+  &:disabled ~ label {
+    color: #212121;
+    background-color: lightgray;
+    border-color: darkgrey;
+    cursor: auto;
+  }
 `;
 const FileLabel = styled.label`
   display: flex;
   margin: auto;
   cursor: pointer;
+  color: #212121;
   border: 1px solid #212121;
   padding: 20px;
   transition: all 0.25s;
