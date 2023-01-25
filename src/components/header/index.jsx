@@ -5,7 +5,12 @@ const Header = (props) => {
     <Wrapper>
       <Img src="/assets/copy-logo2.png" />
       <Form>
-        <Button>Очистити список файлів</Button>
+        <Button
+          type={`button`}
+          onClick={() => window.location.reload()}
+          value={`
+          Перезапустити`}
+        />
       </Form>
     </Wrapper>
   );
@@ -24,12 +29,12 @@ const Wrapper = styled.header`
 
 const Form = styled.form`
   position: absolute;
-  height: 64px;
+  display: flex;
   right: 20px;
+  vertical-align: middle;
 `;
-const Button = styled.button`
-  height: 100%;
-  padding: 20px;
+const Button = styled.input`
+  padding: 6px 28px 20px 0;
 `;
 
 export default Header;

@@ -8,25 +8,25 @@ const Loader = () => (
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 360px;
+  height: 400;
   justify-content: center;
 `;
 const Circle = styled.div`
   margin-top: 100px;
   display: block;
-  background: linear-gradient(to left, LemonChiffon, #212121);
-  width: 120px;
-  height: 120px;
+  background: linear-gradient(to left, #008ff0, #a1169c);
+  width: 140px;
+  height: 140px;
   animation: spin 2s linear infinite;
   border-radius: 50%;
   &:before {
     border-radius: 50%;
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     content: "";
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 15px;
+    right: 15px;
     z-index: -1;
     background: white;
   }

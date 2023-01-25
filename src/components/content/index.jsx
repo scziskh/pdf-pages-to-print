@@ -173,17 +173,17 @@ const Form = styled.form`
   display: flex;
 `;
 const Select = styled.select`
-  width: 10%;
+  width: 12%;
   margin: 0 5px;
   padding: 10px;
 `;
 const Input = styled.input`
-  width: 10%;
+  width: 12%;
   padding: 10px;
   margin: 0 5px;
 `;
 const Checkbox = styled.div`
-  width: 10%;
+  width: 12%;
   margin: 0 5px;
   label {
     padding: 10px;
@@ -207,7 +207,7 @@ const Checkbox = styled.div`
 
 const FixedHeightDiv = styled.div`
   padding: 20px;
-  height: 360px;
+  height: 400px;
 `;
 
 export default Content;
