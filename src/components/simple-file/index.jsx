@@ -74,7 +74,16 @@ const SimpleFile = ({ props, index }) => {
         <PagesNumber>{pdfsProps?.[index]?.pagesCount}</PagesNumber>
       ) : (
         <SetPagesNumber>
-          <input type={`number`} {...register(`pagesCountUser`)} />
+          <input
+            type={`number`}
+            {...register(`pagesCountUser`)}
+            onKeyDown={(e) => {
+              console.log(e.key);
+              if (e.key === `Enter`) {
+                return handlePagesCountChange();
+              }
+            }}
+          />
           <input
             type={`button`}
             value={`ok`}
