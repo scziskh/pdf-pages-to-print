@@ -13,6 +13,13 @@ const Content = (props) => {
   const [isLoading, setIsLoading] = useState(false); // if isLoading - true, else - false
   const [formData, setFormData] = useState(defaultFormData); // state of form with params printing
 
+  const dublicatePdfProps = () => {
+    setPdfsProps((state) => {
+      const result = state.concat(state);
+      return result;
+    });
+  };
+
   // action when file(s) choosed
   const handleFileChange = (e) => {
     setIsLoading(true);
@@ -120,6 +127,9 @@ const Content = (props) => {
         <FileLabel htmlFor="files">
           Додати файли PDF (Додано: {pdfsProps.length} файлів)
         </FileLabel>
+        <DublicatePdfProps onClick={dublicatePdfProps}>
+          Дублювати файли
+        </DublicatePdfProps>
       </FileContainer>
       <FixedHeightDiv>
         {isLoading ? <Loader /> : <TableResult totalFiles={pdfsProps.length} />}
@@ -136,8 +146,6 @@ const Wrapper = styled.section`
 const FileContainer = styled.form`
   width: 100%;
   padding: 20px;
-  display: flex;
-  align-items: center;
 `;
 
 const File = styled.input`
@@ -150,13 +158,15 @@ const File = styled.input`
   }
 `;
 const FileLabel = styled.label`
-  display: flex;
+  display: block;
   margin: auto;
   cursor: pointer;
   color: #212121;
   border: 1px solid #212121;
   padding: 20px;
   transition: all 0.25s;
+  width: 50%;
+  text-align: center;
   &:hover {
     background-color: #212121;
     color: white;
@@ -208,6 +218,13 @@ const Checkbox = styled.div`
 const FixedHeightDiv = styled.div`
   padding: 20px;
   height: 400px;
+`;
+
+const DublicatePdfProps = styled.div`
+  margin: auto;
+  width: fit-content;
+  text-decoration: underline;
+  cursor: pointer;
 `;
 
 export default Content;
