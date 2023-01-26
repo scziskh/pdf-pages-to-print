@@ -3,7 +3,12 @@ import styled from "styled-components";
 const Header = (props) => {
   return (
     <Wrapper>
-      <Img src="/assets/copy-logo2.png" />
+      <Img
+        src="/assets/copy-logo2.png"
+        alt="COPY SHOP"
+        width={`95px`}
+        height={`64px`}
+      />
       <Form>
         <Button
           type={`button`}
