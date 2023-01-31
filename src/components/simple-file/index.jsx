@@ -78,7 +78,6 @@ const SimpleFile = ({ props, index }) => {
             type={`number`}
             {...register(`pagesCountUser`)}
             onKeyDown={(e) => {
-              console.log(e.key);
               if (e.key === `Enter`) {
                 return handlePagesCountChange();
               }

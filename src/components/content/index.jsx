@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
@@ -14,10 +15,14 @@ const Content = (props) => {
   const [formData, setFormData] = useState(defaultFormData); // state of form with params printing
 
   const dublicatePdfProps = () => {
-    setPdfsProps((state) => {
-      const result = state.concat(state);
-      return result;
-    });
+    const isTrue = confirm("Ви впевненні, що хочете продублювати файли?");
+
+    if (isTrue) {
+      setPdfsProps((state) => {
+        const result = state.concat(state);
+        return result;
+      });
+    }
   };
 
   // action when file(s) choosed
