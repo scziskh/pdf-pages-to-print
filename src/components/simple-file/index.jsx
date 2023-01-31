@@ -69,13 +69,14 @@ const SimpleFile = ({ props, index }) => {
         />
         <label htmlFor={`isTwoPerPage${index}`}>2 на 1 стор.</label>
       </Checkbox>
-      <Input type={`number`} {...register(`copiesCount`)} />
+      <Input type={`number`} min={0} {...register(`copiesCount`)} />
       {pdfsProps?.[index]?.pagesCount ? (
         <PagesNumber>{pdfsProps?.[index]?.pagesCount}</PagesNumber>
       ) : (
         <SetPagesNumber>
           <input
             type={`number`}
+            min={0}
             {...register(`pagesCountUser`)}
             onKeyDown={(e) => {
               if (e.key === `Enter`) {

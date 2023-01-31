@@ -101,6 +101,7 @@ const Content = (props) => {
         </Checkbox>
         <Input
           type={`number`}
+          min={0}
           placeholder={`Максимум аркушів на скобу `}
           {...register(`maxSheetsStaples`)}
           disabled={!formData.isBinding}
@@ -115,6 +116,7 @@ const Content = (props) => {
         </Checkbox>
         <Input
           type={`number`}
+          min={0}
           placeholder={`Копій`}
           {...register(`copiesCount`)}
         />
