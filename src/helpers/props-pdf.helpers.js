@@ -31,7 +31,8 @@ export const getPdfsProps = async (files, config) => {
   return Object.keys(files)?.reduce(async (accum, key) => {
     const temp = await accum;
     const file = files[key];
-    const pdf = await getPdf(file);
+    console.log(file);
+    const pdf = file.type === `application/pdf` ? await getPdf(file) : null;
     const { name } = file;
     const href = URL.createObjectURL(file);
     let pagesCount;

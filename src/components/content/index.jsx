@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { defaultFormData } from "../../helpers/config";
@@ -13,6 +13,15 @@ const Content = (props) => {
   const [pdfsProps, setPdfsProps] = useState(() => []); // properties of pdf files
   const [isLoading, setIsLoading] = useState(false); // if isLoading - true, else - false
   const [formData, setFormData] = useState(defaultFormData); // state of form with params printing
+
+  const ref = useRef();
+
+  useEffect(() => {
+    if (ref.current !== null) {
+      ref.current.setAttribute("directory", "");
+      ref.current.setAttribute("webkitdirectory", "");
+    }
+  }, [ref]);
 
   const dublicatePdfProps = () => {
     const isTrue = confirm("Ви впевненні, що хочете продублювати файли?");
@@ -124,15 +133,17 @@ const Content = (props) => {
       <FileContainer>
         <File
           type="file"
+          ref={ref}
           onChange={handleFileChange}
           name="files"
           id="files"
-          accept=".pdf"
+          dir={`true`}
           multiple
+          accept=".pdf"
           disabled={isLoading}
         />
         <FileLabel htmlFor="files">
-          Додати файли PDF (Додано: {pdfsProps.length} файлів)
+          Додати теку з файлами (Додано: {pdfsProps.length} файлів)
         </FileLabel>
         <DublicatePdfProps onClick={dublicatePdfProps}>
           Дублювати файли
