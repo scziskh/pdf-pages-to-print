@@ -5,12 +5,13 @@ import styled from "styled-components";
 import { defaultFormData } from "../../helpers/config";
 import { getPdfsProps } from "../../helpers/props-pdf.helpers";
 import Loader from "../loader";
+import Path from "../path";
 import SimpleFile from "../simple-file";
 import TableResult from "../table-result";
 
 const Content = (props) => {
   const [files, setFiles] = useState(null); // curr files in input files
-  const [pdfsProps, setPdfsProps] = useState(() => []); // properties of pdf files
+  const [pdfsProps, setPdfsProps] = useState({}); // properties of pdf files
   const [isLoading, setIsLoading] = useState(false); // if isLoading - true, else - false
   const [formData, setFormData] = useState(defaultFormData); // state of form with params printing
 
@@ -27,8 +28,13 @@ const Content = (props) => {
     const isTrue = confirm("Ви впевненні, що хочете продублювати файли?");
 
     if (isTrue) {
+      setIsLoading(true);
+      const dublicate = Object.keys(pdfsProps).reduce((accum, curr) => {
+        accum[`${curr} --dublicated`] = pdfsProps[curr];
+        return accum;
+      }, {});
       setPdfsProps((state) => {
-        const result = state.concat(state);
+        const result = Object.assign(state, dublicate);
         return result;
       });
     }
@@ -37,7 +43,6 @@ const Content = (props) => {
   // action when file(s) choosed
   const handleFileChange = (e) => {
     setIsLoading(true);
-    console.log(document.getElementById("files").value);
     setFiles(e.target.files);
   };
 
@@ -53,17 +58,25 @@ const Content = (props) => {
       const currPdfsProps = await getPdfsProps(files, formData);
 
       setPdfsProps((state) => {
-        const result = state.concat(currPdfsProps);
+        const result = Object.assign(state, currPdfsProps);
         return result;
       });
       setIsLoading(false);
+      setFiles(null);
     };
 
     if (files) {
       setterPdfsProps();
+    } else {
+      setIsLoading(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [files]);
+  }, [files, isLoading]);
+
+  useEffect(() => {
+    setFiles(null);
+    setIsLoading(false);
+  }, [pdfsProps]);
 
   // init react-hook-form
   const { register, getValues } = useForm({
@@ -71,15 +84,26 @@ const Content = (props) => {
     defaultValues: formData,
   });
 
-  // JSX component with params of each pdf file
-  const filesList = pdfsProps.map((pdfProps, index) => (
-    <SimpleFile
-      key={`${index}key${pdfProps.name}`}
-      props={pdfProps}
-      index={index}
-    />
-  ));
+  let numFiles = 0;
 
+  // JSX component with params of each pdf file
+  const fileList = Object.keys(pdfsProps)?.map((pathname, index) => {
+    return (
+      <div key={`${index}key${pathname}`}>
+        <Path pathname={pathname} />
+        {pdfsProps[pathname].map((currPdfProps, index) => {
+          ++numFiles;
+          return (
+            <SimpleFile
+              key={`${index}key${currPdfProps.name}${pathname}`}
+              props={currPdfProps}
+              index={`${pathname} file${index}`}
+            />
+          );
+        })}
+      </div>
+    );
+  });
   return (
     <Wrapper>
       <Form onChange={handleChange}>
@@ -143,16 +167,16 @@ const Content = (props) => {
           disabled={isLoading}
         />
         <FileLabel htmlFor="files">
-          Додати теку з файлами (Додано: {pdfsProps.length} файлів)
+          Додати теку з файлами (Додано: {numFiles} файлів)
         </FileLabel>
         <DublicatePdfProps onClick={dublicatePdfProps}>
           Дублювати файли
         </DublicatePdfProps>
       </FileContainer>
       <FixedHeightDiv>
-        {isLoading ? <Loader /> : <TableResult totalFiles={pdfsProps.length} />}
+        {isLoading ? <Loader /> : <TableResult totalFiles={numFiles} />}
       </FixedHeightDiv>
-      {filesList}
+      {fileList}
     </Wrapper>
   );
 };

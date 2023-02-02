@@ -31,7 +31,9 @@ export const getPdfsProps = async (files, config) => {
   return Object.keys(files)?.reduce(async (accum, key) => {
     const temp = await accum;
     const file = files[key];
-    console.log(file);
+    const pathArray = file.webkitRelativePath.split(`/`);
+    pathArray.pop();
+    const path = pathArray.join("/");
     const pdf = file.type === `application/pdf` ? await getPdf(file) : null;
     const { name } = file;
     const href = URL.createObjectURL(file);
@@ -46,7 +48,7 @@ export const getPdfsProps = async (files, config) => {
       ? getBinding(sheetsCount, maxSheetsStaples)
       : "no-binding";
 
-    temp.push({
+    const result = {
       print,
       pagesCount,
       isPerforation,
@@ -55,10 +57,11 @@ export const getPdfsProps = async (files, config) => {
       name,
       sides,
       href,
-    });
+    };
 
+    temp[path] ? temp[path]?.push(result) : (temp[path] = [result]);
     return temp;
-  }, Promise.resolve([]));
+  }, Promise.resolve({}));
 };
 
 export const getAmountsPdfProps = (pdfsProps) => {
