@@ -49,9 +49,9 @@ const SimpleFile = ({ props, index }) => {
         <option value={`color-paper`}>Кольоровий папір</option>
       </Select>
       <Select {...register(`binding`)}>
-        <option value={`no-binding`}>Без сшивки</option>
+        <option value={`no-binding`}>Без зшивання</option>
         <option value={`staple`}>Степлер</option>
-        <option value={`folder`}>Швидкосшивач</option>
+        <option value={`folder`}>Швидкозшивач</option>
       </Select>
       <Checkbox>
         <input

@@ -22,7 +22,9 @@ export const getPdf = async (file) => {
   // read file as array buffer (UTF-8)
   const arrayBuffer = await readFileAsArrayBuffer(file);
   // load pdf file with pdf-lib
-  const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
-
-  return pdf;
+  try {
+    return await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+  } catch {
+    return null;
+  }
 };

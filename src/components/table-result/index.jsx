@@ -34,7 +34,7 @@ const TableResult = (props) => {
         <Div>{ammountsPdfsProps && ammountsPdfsProps[`perforationCount`]}</Div>
         <Div>Степлер:</Div>
         <Div>{ammountsPdfsProps && ammountsPdfsProps[`staple`]}</Div>
-        <Div>Швидкосшивач:</Div>
+        <Div>Швидкозшивач:</Div>
         <Div>{ammountsPdfsProps && ammountsPdfsProps[`folder`]}</Div>
       </Grid>
     </Wrapper>

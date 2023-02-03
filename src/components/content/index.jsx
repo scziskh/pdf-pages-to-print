@@ -97,13 +97,14 @@ const Content = (props) => {
             <SimpleFile
               key={`${index}key${currPdfProps.name}${pathname}`}
               props={currPdfProps}
-              index={`${pathname} file${index}`}
+              index={`${pathname} ${currPdfProps.name}`}
             />
           );
         })}
       </div>
     );
   });
+
   return (
     <Wrapper>
       <Form onChange={handleChange}>
@@ -130,7 +131,7 @@ const Content = (props) => {
             {...register(`isBinding`)}
             id={`isBinding`}
           />
-          <label htmlFor={`isBinding`}>Степлер/швидкосшивач</label>
+          <label htmlFor={`isBinding`}>Степлер/швидкозшивач</label>
         </Checkbox>
         <Input
           type={`number`}
@@ -159,20 +160,21 @@ const Content = (props) => {
           type="file"
           ref={ref}
           onChange={handleFileChange}
-          name="files"
-          id="files"
+          name="folder"
+          id="folder"
           dir={`true`}
           multiple
           accept=".pdf"
           disabled={isLoading}
         />
-        <FileLabel htmlFor="files">
-          Додати теку з файлами (Додано: {numFiles} файлів)
-        </FileLabel>
-        <DublicatePdfProps onClick={dublicatePdfProps}>
-          Дублювати файли
-        </DublicatePdfProps>
+        <FolderLabel htmlFor="folder">
+          Додати папку з файлами (Додано: {Object.keys(pdfsProps).length} папок,{" "}
+          {numFiles} файлів)
+        </FolderLabel>
       </FileContainer>
+      <DublicatePdfProps onClick={dublicatePdfProps}>
+        Дублювати файли
+      </DublicatePdfProps>
       <FixedHeightDiv>
         {isLoading ? <Loader /> : <TableResult totalFiles={numFiles} />}
       </FixedHeightDiv>
@@ -186,8 +188,11 @@ const Wrapper = styled.section`
 `;
 
 const FileContainer = styled.form`
-  width: 100%;
+  position: relative;
+  width: 50%;
   padding: 20px;
+  height: 85px;
+  margin: auto;
 `;
 
 const File = styled.input`
@@ -199,15 +204,32 @@ const File = styled.input`
     cursor: auto;
   }
 `;
+
 const FileLabel = styled.label`
-  display: block;
+  position: absolute;
+  left: 50%;
   margin: auto;
   cursor: pointer;
   color: #212121;
   border: 1px solid #212121;
   padding: 20px;
   transition: all 0.25s;
-  width: 50%;
+  text-align: center;
+  &:hover {
+    background-color: #212121;
+    color: white;
+  }
+`;
+
+const FolderLabel = styled.label`
+  position: absolute;
+  right: 50%;
+  margin: auto;
+  cursor: pointer;
+  color: #212121;
+  border: 1px solid #212121;
+  padding: 20px;
+  transition: all 0.25s;
   text-align: center;
   &:hover {
     background-color: #212121;

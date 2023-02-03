@@ -31,9 +31,12 @@ export const getPdfsProps = async (files, config) => {
   return Object.keys(files)?.reduce(async (accum, key) => {
     const temp = await accum;
     const file = files[key];
-    const pathArray = file.webkitRelativePath.split(`/`);
+    const webkitRelativePath = file.webkitRelativePath;
+    const pathArray =
+      webkitRelativePath === "" ? [] : webkitRelativePath.split(`/`);
     pathArray.pop();
-    const path = pathArray.join("/");
+    const path =
+      pathArray.length === 0 ? `Single PDF Files` : pathArray.join("/");
     const pdf = file.type === `application/pdf` ? await getPdf(file) : null;
     const { name } = file;
     const href = URL.createObjectURL(file);
