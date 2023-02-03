@@ -24,7 +24,7 @@ export const getPdf = async (file) => {
   let pdf;
   // load pdf file with pdf-lib
   try {
-    pdf = await PDFDocument.load(arrayBuffer);
+    pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   } catch {
     pdf = null;
   }

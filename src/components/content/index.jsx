@@ -222,8 +222,7 @@ const FileLabel = styled.label`
 `;
 
 const FolderLabel = styled.label`
-  position: absolute;
-  right: 50%;
+  width: 100%;
   margin: auto;
   cursor: pointer;
   color: #212121;
