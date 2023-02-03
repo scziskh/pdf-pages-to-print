@@ -21,6 +21,7 @@ const readFileAsArrayBuffer = (file) => {
 export const getPdf = async (file) => {
   // read file as array buffer (UTF-8)
   const arrayBuffer = await readFileAsArrayBuffer(file);
+  console.log({ name: file.name, arrayBuffer });
   let pdf;
   // load pdf file with pdf-lib
   try {
