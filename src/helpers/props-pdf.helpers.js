@@ -39,10 +39,15 @@ export const getPdfsProps = async (files, config) => {
       pathArray.length === 0 ? `Single PDF Files` : pathArray.join("/");
     const pdf = file.type === `application/pdf` ? await getPdf(file) : null;
     const { name } = file;
+
     const href = URL.createObjectURL(file);
     let pagesCount;
     try {
-      pagesCount = pdf.getPageCount();
+      if (pdf) {
+        pagesCount = pdf.getPageCount();
+      } else {
+        pagesCount = 0;
+      }
     } catch {
       pagesCount = 0;
     }

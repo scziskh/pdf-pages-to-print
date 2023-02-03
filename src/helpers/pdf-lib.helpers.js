@@ -21,10 +21,13 @@ const readFileAsArrayBuffer = (file) => {
 export const getPdf = async (file) => {
   // read file as array buffer (UTF-8)
   const arrayBuffer = await readFileAsArrayBuffer(file);
+  let pdf;
   // load pdf file with pdf-lib
   try {
-    return await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+    pdf = await PDFDocument.load(arrayBuffer);
   } catch {
-    return null;
+    pdf = null;
   }
+
+  return pdf;
 };
