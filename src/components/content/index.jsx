@@ -206,8 +206,6 @@ const File = styled.input`
 `;
 
 const FileLabel = styled.label`
-  position: absolute;
-  left: 50%;
   margin: auto;
   cursor: pointer;
   color: #212121;
@@ -222,6 +220,7 @@ const FileLabel = styled.label`
 `;
 
 const FolderLabel = styled.label`
+  display: block;
   width: 100%;
   margin: auto;
   cursor: pointer;
@@ -230,6 +229,7 @@ const FolderLabel = styled.label`
   padding: 20px;
   transition: all 0.25s;
   text-align: center;
+  white-space: nowrap;
   &:hover {
     background-color: #212121;
     color: white;
