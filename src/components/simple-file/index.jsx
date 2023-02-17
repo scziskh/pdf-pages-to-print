@@ -22,8 +22,15 @@ const SimpleFile = ({ props, index }) => {
 
   const handlePagesCountChange = () => {
     setIsLoading(true);
-    setValue(`pagesCount`, getValues(`pagesCountUser`));
+    setValue(`pagesCount`, Number(getValues(`pagesCountUser`)));
   };
+
+  const handlePagesCountZero = () => {
+    setIsLoading(true);
+    setValue(`pagesCount`, 0);
+  };
+
+  console.log(getValues());
 
   useEffect(() => {
     setIsLoading(false);
@@ -71,7 +78,14 @@ const SimpleFile = ({ props, index }) => {
       </Checkbox>
       <Input type={`number`} min={0} {...register(`copiesCount`)} />
       {pdfsProps?.[index]?.pagesCount ? (
-        <PagesNumber>{pdfsProps?.[index]?.pagesCount}</PagesNumber>
+        <PagesNumber>
+          {pdfsProps?.[index]?.pagesCount}
+          <ChangePagesNumber
+            type={`button`}
+            value={`c`}
+            onClick={handlePagesCountZero}
+          />
+        </PagesNumber>
       ) : (
         <SetPagesNumber>
           <input
@@ -134,6 +148,7 @@ const FileName = styled.div`
   white-space: nowrap;
 `;
 const PagesNumber = styled.div`
+  position: relative;
   padding: 10px;
   width: 10%;
   text-align: center;
@@ -185,6 +200,13 @@ const Checkbox = styled.div`
   input {
     display: none;
   }
+`;
+
+const ChangePagesNumber = styled.input`
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  right: 0;
 `;
 
 export default SimpleFile;
