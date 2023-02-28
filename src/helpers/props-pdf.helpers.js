@@ -28,22 +28,19 @@ export const getPdfsProps = async (files, config) => {
     copiesCount,
   } = config;
 
-  return Object.values(files)?.reduce(async (accum, file) => {
+  return Object.keys(files)?.reduce(async (accum, key) => {
     const temp = await accum;
+    const file = files[key];
     const webkitRelativePath = file.webkitRelativePath;
     const pathArray =
       webkitRelativePath === "" ? [] : webkitRelativePath.split(`/`);
     pathArray.pop();
-    console.log(`ok`);
-    const path = pathArray.length === 0 ? file.name : pathArray.join("/");
+    const path =
+      pathArray.length === 0 ? `Single PDF Files` : pathArray.join("/");
     const pdf = file.type === `application/pdf` ? await getPdf(file) : null;
     const { name } = file;
-    let href;
-    try {
-      href = URL.createObjectURL(file);
-    } catch (e) {
-      console.log(`ERROR: ${e}`);
-    }
+
+    const href = URL.createObjectURL(file);
     let pagesCount;
     try {
       if (pdf) {
@@ -70,7 +67,7 @@ export const getPdfsProps = async (files, config) => {
       href,
     };
 
-    temp[path] ? temp[path].push(result) : (temp[path] = [result]);
+    temp[path] ? temp[path]?.push(result) : (temp[path] = [result]);
     return temp;
   }, Promise.resolve({}));
 };
@@ -82,7 +79,8 @@ export const getAmountsPdfProps = (pdfsProps) => {
   }, {});
 
   // eslint-disable-next-line array-callback-return
-  const result = Object.values(pdfsProps).reduce((accum, pdfProps) => {
+  const result = Object.keys(pdfsProps).reduce((accum, key) => {
+    const pdfProps = pdfsProps[key];
     const {
       pagesCount,
       copiesCount,

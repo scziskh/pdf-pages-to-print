@@ -7,18 +7,10 @@ const readFileAsArrayBuffer = (file) => {
     const reader = new FileReader();
 
     // if reader read return result
-    reader.onload = () => {
-      const result = resolve(reader.result);
-      return result;
-    };
+    reader.onload = () => resolve(reader.result);
 
     // if reader error throw error
-    reader.onerror = (error) => {
-      const result = resolve(null);
-      console.log(error);
-
-      return result;
-    };
+    reader.onerror = (error) => reject(error);
 
     // read file as array buffer (UTF-8)
     reader.readAsArrayBuffer(file);
@@ -29,14 +21,11 @@ const readFileAsArrayBuffer = (file) => {
 export const getPdf = async (file) => {
   // read file as array buffer (UTF-8)
   const arrayBuffer = await readFileAsArrayBuffer(file);
+  console.log({ name: file.name, arrayBuffer });
   let pdf;
   // load pdf file with pdf-lib
   try {
-    if (arrayBuffer) {
-      pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
-    } else {
-      pdf = null;
-    }
+    pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
   } catch {
     pdf = null;
   }

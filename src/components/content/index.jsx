@@ -164,18 +164,9 @@ const Content = (props) => {
           id="folder"
           dir={`true`}
           multiple
-          disabled={isLoading}
-        />
-        <File
-          type="file"
-          onChange={handleFileChange}
-          name="file"
-          id="file"
-          multiple
           accept=".pdf"
           disabled={isLoading}
         />
-        <FileLabel htmlFor="file">Додати файли</FileLabel>
         <FolderLabel htmlFor="folder">
           Додати папку з файлами (Додано: {Object.keys(pdfsProps).length} папок,{" "}
           {numFiles} файлів)
@@ -197,10 +188,10 @@ const Wrapper = styled.section`
 `;
 
 const FileContainer = styled.form`
-  display: flex;
   position: relative;
   width: 50%;
   padding: 20px;
+  height: 85px;
   margin: auto;
 `;
 
@@ -215,16 +206,13 @@ const File = styled.input`
 `;
 
 const FileLabel = styled.label`
-  display: block;
-  width: 20%;
-  justify-content: center;
+  margin: auto;
   cursor: pointer;
   color: #212121;
   border: 1px solid #212121;
   padding: 20px;
   transition: all 0.25s;
   text-align: center;
-  white-space: nowrap;
   &:hover {
     background-color: #212121;
     color: white;
@@ -233,8 +221,8 @@ const FileLabel = styled.label`
 
 const FolderLabel = styled.label`
   display: block;
-  width: 80%;
-  justify-content: center;
+  width: 100%;
+  margin: auto;
   cursor: pointer;
   color: #212121;
   border: 1px solid #212121;
