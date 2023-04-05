@@ -21,5 +21,4 @@ const TextArea = styled.textarea`
   width: 20%;
   height: 342px;
   padding: 5px 10px;
-  font-size: 14px;
 `;

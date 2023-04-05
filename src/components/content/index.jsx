@@ -171,8 +171,8 @@ const Content = (props) => {
           disabled={isLoading}
         />
         <FolderLabel htmlFor="folder">
-          Додати папку з файлами (Додано: {Object.keys(pdfsProps).length} папок,{" "}
-          {numFiles} файлів)
+          Додати папку з файлами (Додано: {Object.keys(pdfsProps).length - 1}{" "}
+          папок, {numFiles} файлів)
         </FolderLabel>
       </FileContainer>
       <DublicatePdfProps onClick={dublicatePdfProps}>
