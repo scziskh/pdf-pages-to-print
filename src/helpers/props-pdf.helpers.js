@@ -67,7 +67,11 @@ export const getPdfsProps = async (files, config) => {
       href,
     };
 
+    const folderName = pathArray[pathArray.length - 1];
     temp[path] ? temp[path]?.push(result) : (temp[path] = [result]);
+    temp.folderList
+      ? temp.folderList.add(pathArray[pathArray.length - 1])
+      : (temp.folderList = new Set([folderName]));
     return temp;
   }, Promise.resolve({}));
 };

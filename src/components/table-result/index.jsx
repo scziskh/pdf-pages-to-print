@@ -41,7 +41,9 @@ const TableResult = (props) => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  width: 50%;
+`;
 const Div = styled.div`
   border: 1px solid #212121;
   padding: 10px;
@@ -49,8 +51,6 @@ const Div = styled.div`
   background-color: ${(props) => props.background ?? "white"};
 `;
 const Grid = styled.div`
-  margin: auto;
-  width: 50%;
   display: grid;
   grid-template-columns: 2fr 1fr;
 `;

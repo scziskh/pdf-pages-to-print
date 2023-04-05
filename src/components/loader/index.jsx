@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 400;
   justify-content: center;
+  margin-left: -25%;
 `;
 const Circle = styled.div`
   margin-top: 100px;

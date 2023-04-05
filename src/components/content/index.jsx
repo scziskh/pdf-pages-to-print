@@ -8,6 +8,7 @@ import Loader from "../loader";
 import Path from "../path";
 import SimpleFile from "../simple-file";
 import TableResult from "../table-result";
+import PathList from "../path-list";
 
 const Content = (props) => {
   const [files, setFiles] = useState(null); // curr files in input files
@@ -88,21 +89,23 @@ const Content = (props) => {
 
   // JSX component with params of each pdf file
   const fileList = Object.keys(pdfsProps)?.map((pathname, index) => {
-    return (
-      <div key={`${index}key${pathname}`}>
-        <Path pathname={pathname} />
-        {pdfsProps[pathname].map((currPdfProps, index) => {
-          ++numFiles;
-          return (
-            <SimpleFile
-              key={`${index}key${currPdfProps.name}${pathname}`}
-              props={currPdfProps}
-              index={`${pathname} ${currPdfProps.name}`}
-            />
-          );
-        })}
-      </div>
-    );
+    if (pathname !== "folderList") {
+      return (
+        <div key={`${index}key${pathname}`}>
+          <Path pathname={pathname} />
+          {pdfsProps[pathname].map((currPdfProps, index) => {
+            ++numFiles;
+            return (
+              <SimpleFile
+                key={`${index}key${currPdfProps.name}${pathname}`}
+                props={currPdfProps}
+                index={`${pathname} ${currPdfProps.name}`}
+              />
+            );
+          })}
+        </div>
+      );
+    }
   });
 
   return (
@@ -176,7 +179,14 @@ const Content = (props) => {
         Дублювати файли
       </DublicatePdfProps>
       <FixedHeightDiv>
-        {isLoading ? <Loader /> : <TableResult totalFiles={numFiles} />}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <>
+            <TableResult totalFiles={numFiles} />
+            <PathList values={pdfsProps.folderList} />
+          </>
+        )}
       </FixedHeightDiv>
       {fileList}
     </Wrapper>
@@ -279,8 +289,11 @@ const Checkbox = styled.div`
 `;
 
 const FixedHeightDiv = styled.div`
+  width: 100%;
   padding: 20px;
   height: 400px;
+  display: flex;
+  margin-left: 25%;
 `;
 
 const DublicatePdfProps = styled.div`
